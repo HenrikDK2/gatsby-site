@@ -42,7 +42,7 @@ class productDetails extends React.Component {
 
 export default productDetails;
 export const productQuery = graphql`
-  query productQuery($slug: String!) {
+  query singleProduct($slug: String!) {
     site {
       siteMetadata {
         title
@@ -50,18 +50,21 @@ export const productQuery = graphql`
     }
 
     contentfulProdukt(slug: { eq: $slug }) {
-      category
-      image {
-        fluid {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
-      }
-      desc
-      discount
-      name
+      stock
+      slug
       sku
       price
-      stock
+      name
+      image {
+        fluid {
+          src
+        }
+      }
+      discount
+      desc
+      category {
+        name
+      }
     }
   }
 `;

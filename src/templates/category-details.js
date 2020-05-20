@@ -6,7 +6,7 @@ import Layout from "../components/layout";
 import ProductCard from "../components/ProductCard";
 import { css } from "emotion";
 
-class Products extends React.Component {
+class categoryDetails extends React.Component {
   render() {
     const siteTitle = get(this, "props.data.site.sitemMetadata.title");
     const posts = get(this, "props.data.allContentfulProdukt.nodes");
@@ -25,7 +25,7 @@ class Products extends React.Component {
     return (
       <Layout>
         <Helmet title={siteTitle} />
-        <h1>All Products</h1>
+        <h1>Categories</h1>
         <ul className={listStyle}>
           {posts.map((product, i) => (
             <ProductCard
@@ -45,27 +45,27 @@ class Products extends React.Component {
   }
 }
 
-export default Products;
+export default categoryDetails;
 export const productQuery = graphql`
-  query productsQuery {
+  query getProductsFromCategory($category: String!) {
     site {
       siteMetadata {
         title
       }
     }
 
-    allContentfulProdukt {
+    allContentfulProdukt(filter: { category: { name: { eq: $category } } }) {
       nodes {
         stock
         slug
         sku
         price
-        name
         image {
           fluid {
             src
           }
         }
+        name
         discount
         desc
         category {
